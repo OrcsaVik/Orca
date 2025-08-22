@@ -19,4 +19,12 @@ public @interface RpcService {
      * 版本
      */
     String serviceVersion() default RpcLoadConstant.DEFAULT_SERVICE_VERSION;
+
+    //分组 默认为空
+    String serviceGroup() default "default";
+
+    /**
+     * 权重（用于负载均衡）
+     */
+    int weight() default 100;
 }

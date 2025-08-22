@@ -27,6 +27,9 @@ public class ServiceMetaInfoDTO {
      */
     private Integer servicePort;
 
+    //权重
+    private Integer weight;
+
     /**
      * 服务分组（暂未实现）
      */
@@ -40,7 +43,7 @@ public class ServiceMetaInfoDTO {
     public String getServiceKey() {
         // 后续可扩展服务分组
 //        return String.format("%s:%s:%s", serviceName, serviceVersion, serviceGroup);
-        return String.format("%s:%s", serviceName, serviceVersion);
+        return buildKey(serviceName, serviceVersion, serviceGroup);
     }
 
     /**
@@ -64,6 +67,10 @@ public class ServiceMetaInfoDTO {
         return String.format("%s:%s", serviceHost, servicePort);
     }
 
-
-
+    //注册服务键值
+    public static String buildKey(String serviceName, String serviceGroup, String serviceVersion) {
+        return String.format("%s:%s:%s", serviceName, serviceGroup, serviceVersion);
+    }
 }
+
+

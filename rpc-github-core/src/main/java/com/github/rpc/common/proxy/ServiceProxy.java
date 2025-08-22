@@ -16,8 +16,10 @@ import com.github.rpc.common.serializer.SerializerFactory;
 import com.github.rpc.common.tolerant.TolerantStrategy;
 import com.github.rpc.common.tolerant.TolerantStrategyFactory;
 import com.github.rpc.config.GlobalRpcConfig;
+import com.github.rpc.config.RpcReferenceConfig;
 import com.github.rpc.config.RpcThreadPool;
 import com.github.rpc.constants.RpcLoadConstant;
+import com.github.rpc.constants.TolerantStrategyConstant;
 import com.github.rpc.exception.BizException;
 import com.github.rpc.model.RpcRequest;
 import com.github.rpc.model.RpcResponse;
@@ -37,7 +39,15 @@ import java.util.concurrent.TimeUnit;
  * TODO 这里默认适用服务类代理对象
  */
 @Slf4j
+
 public class ServiceProxy implements InvocationHandler {
+
+    private RpcReferenceConfig config;
+
+    public void setConfig(RpcReferenceConfig config) {
+        this.config = config;
+    }
+
 
     /**
      * 调用代理
@@ -58,6 +68,7 @@ public class ServiceProxy implements InvocationHandler {
 
         // 从注册中心获取服务提供者请求地址
         GlobalRpcConfig rpcConfig = RpcApplication.getRpcConfig();
+        RpcReferenceConfig thisConfig = config;
         Registry registry = RegistryFactory.getInstance(rpcConfig.getRegistryConfig().getRegistry());
         ServiceMetaInfoDTO serviceMetaInfo = new ServiceMetaInfoDTO();
         serviceMetaInfo.setServiceName(serviceName);
@@ -68,7 +79,7 @@ public class ServiceProxy implements InvocationHandler {
         }
 
         // 负载均衡
-        LoadBalancer loadBalancer = LoadBalancerFactory.getInstance(rpcConfig.getLoadBalancer());
+        LoadBalancer loadBalancer = LoadBalancerFactory.getInstance(thisConfig.getLoadBalancer());
         // 将调用方法名（请求路径）作为负载均衡参数
         Map<String, Object> requestParams = new HashMap<>();
         //调用方法
@@ -80,9 +91,9 @@ public class ServiceProxy implements InvocationHandler {
         byte[] bodyBytes = serializer.serialize(rpcRequest);
         // 使用重试机制
         RpcResponse rpcResponse = null;
-        RetryStrategy retryStrategy = RetryStrategyFactory.getInstance(rpcConfig.getRetryStrategy());
+        RetryStrategy retryStrategy = RetryStrategyFactory.getInstance(thisConfig.getRetryStrategy());
         //假设这里使用空字符拆n TODO 待实现
-        TolerantStrategy tolerantStrategy = TolerantStrategyFactory.getInstance("");
+        TolerantStrategy tolerantStrategy = TolerantStrategyFactory.getInstance(TolerantStrategyConstant.FAIL_FAST);
         // 使用线程池执行 HTTP 请求（异步执行，但主线程阻塞等待结果）子线程进行处理
         Future<RpcResponse> future = RpcThreadPool.newExecutor().submit(() -> {
             try {

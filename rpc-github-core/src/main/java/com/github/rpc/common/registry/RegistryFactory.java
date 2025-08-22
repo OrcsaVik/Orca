@@ -1,5 +1,6 @@
 package com.github.rpc.common.registry;
 
+import com.github.rpc.common.registry.impl.ZooKeeperRegistry;
 import com.github.rpc.common.spi.SpiLoader;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.zookeeper.common.StringUtils;

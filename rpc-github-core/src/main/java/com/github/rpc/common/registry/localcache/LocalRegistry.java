@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class LocalRegistry {
 
     /**
-     * 注册信息存储
+     * 注册信息存储 key MetaDTO
      */
     private static final Map<String, Class<?>> map = new ConcurrentHashMap<>();
 
@@ -23,19 +23,19 @@ public class LocalRegistry {
     /**
      * 获取服务
      *
-     * @param serviceName
+     * @param serviceKey
      * @return
      */
-    public static Class<?> get(String serviceName) {
-        return map.get(serviceName);
+    public static Class<?> get(String serviceKey) {
+        return map.get(serviceKey);
     }
 
     /**
      * 删除服务
      *
-     * @param serviceName
+     * @param serviceKey
      */
-    public static void remove(String serviceName) {
-        map.remove(serviceName);
+    public static void remove(String serviceKey) {
+        map.remove(serviceKey);
     }
 }

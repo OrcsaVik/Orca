@@ -5,7 +5,7 @@ public interface RetryStrategyConstant{
     /**
      * Guava适用第三方集成
      */
-    String GUAVA = "Guava";
+    String GUAVA = "guava";
 
     /**
      * 固定时间间隔

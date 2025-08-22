@@ -5,7 +5,7 @@ import com.github.rpc.model.dto.ServiceMetaInfoDTO;
 import java.util.List;
 import java.util.Map;
 
-public interface LoadBalancer {
+public interface LoadBalancerStrategy {
 
     /**
      * 选择服务调用

@@ -1,14 +1,14 @@
 package com.github.rpc.common.loadblanace.impl;
 
 import cn.hutool.json.JSONUtil;
-import com.github.rpc.common.loadblanace.LoadBalancer;
+import com.github.rpc.common.loadblanace.LoadBalancerStrategy;
 import com.github.rpc.model.dto.ServiceMetaInfoDTO;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public  class RandomLoadBalancer implements LoadBalancer {
+public  class RandomLoadBalancer implements LoadBalancerStrategy {
 
     private final Random random = new Random();
 

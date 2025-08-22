@@ -22,7 +22,8 @@ public class RpcApplication {
     public static void init() {
         GlobalRpcConfig newRpcConfig;
         try {
-            newRpcConfig = ConfigUtils.loadConfig(GlobalRpcConfig.class, RpcLoadConstant.DEFAULT_CONFIG_PREFIX,environment);
+            //rpc作为前缀 加载配置文件
+            newRpcConfig = ConfigUtils.loadConfig(GlobalRpcConfig.class, RpcLoadConstant.DEFAULT_CONFIG_PREFIX, environment);
         } catch (Exception e) {
             // 配置加载失败，使用默认值
             newRpcConfig = new GlobalRpcConfig();
@@ -30,7 +31,7 @@ public class RpcApplication {
         init(newRpcConfig);
     }
 
-    //
+    //开启注册
     public static void init(GlobalRpcConfig newRpcConfig) {
 
         //赋值给静态变量

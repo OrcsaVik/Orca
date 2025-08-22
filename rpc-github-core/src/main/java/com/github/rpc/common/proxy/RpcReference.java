@@ -1,4 +1,4 @@
-package com.github.rpc.spring.annotation;
+package com.github.rpc.common.proxy;
 
 import com.github.rpc.constants.LoadBalancerConstant;
 import com.github.rpc.constants.RetryStrategyConstant;

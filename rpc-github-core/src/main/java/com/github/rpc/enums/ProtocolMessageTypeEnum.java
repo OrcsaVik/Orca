@@ -7,6 +7,7 @@ import java.util.Objects;
 
 @Getter
 @AllArgsConstructor
+
 public enum ProtocolMessageTypeEnum {
 
     REQUEST(0),
@@ -14,17 +15,18 @@ public enum ProtocolMessageTypeEnum {
     HEART_BEAT(2),
     OTHERS(3);
 
-    private final Integer type;
+    private final int type;
 
 
-
-    public static ProtocolMessageTypeEnum valueOf(Integer code) {
+    public static ProtocolMessageTypeEnum valueOf(int code) {
         for (ProtocolMessageTypeEnum protocoxlMessageTypeEnum : ProtocolMessageTypeEnum.values()) {
             if (Objects.equals(code, protocoxlMessageTypeEnum.getType())) {
                 return protocoxlMessageTypeEnum;
             }
         }
+
+
+
         return null;
     }
-
 }

@@ -1,7 +1,7 @@
 package com.github.rpc.spring.bootstrap;
 
-import com.github.rpc.common.proxy.ServiceProxy;
-import com.github.rpc.spring.annotation.RpcReference;
+import com.github.rpc.common.proxy.RpcReference;
+import com.github.rpc.common.proxy.ServiceProxyFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -22,33 +22,38 @@ public class RpcConsumerBootstrap implements BeanPostProcessor {
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         Class<?> beanClass = bean.getClass();
-        // 遍历对象的所有属性
-        Field[] declaredFields = beanClass.getDeclaredFields();
-        for (Field field : declaredFields) {
+        Field[] fields = beanClass.getDeclaredFields();
+
+        for (Field field : fields) {
             RpcReference rpcReference = field.getAnnotation(RpcReference.class);
             if (rpcReference != null) {
-                // 为属性生成代理对象
+                log.info("💉 注入 RPC 代理: {}.{}", beanClass.getSimpleName(), field.getName());
+
                 Class<?> interfaceClass = rpcReference.interfaceClass();
                 if (interfaceClass == void.class) {
                     interfaceClass = field.getType();
                 }
-                field.setAccessible(true);
-                Object  proxyObject = null;
-                if(interfaceClass.isAssignableFrom(ServiceProxy.class)){
-                        proxyObject = new ServiceProxy();
+
+                if (!interfaceClass.isInterface()) {
+                    throw new IllegalArgumentException("RPC 引用必须是接口: " + field.getName());
                 }
 
+                // 使用工厂创建代理
+                Object proxy = ServiceProxyFactory.getProxy(interfaceClass, rpcReference);
 
+                // 注入字段
                 try {
-                    field.set(bean, proxyObject);
-                    field.setAccessible(false);
+                    field.setAccessible(true);
+                    field.set(bean, proxy);
                 } catch (IllegalAccessException e) {
-                    throw new RuntimeException("为字段注入代理对象失败", e);
+                    throw new RuntimeException("注入失败: " + field.getName(), e);
+                } finally {
+                    field.setAccessible(false);
                 }
             }
         }
-        return BeanPostProcessor.super.postProcessAfterInitialization(bean, beanName);
-    }
 
+        return bean;
+    }
 }
 

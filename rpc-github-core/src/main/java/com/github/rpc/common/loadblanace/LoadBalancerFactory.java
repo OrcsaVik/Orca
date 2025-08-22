@@ -2,6 +2,7 @@ package com.github.rpc.common.loadblanace;
 
 import com.github.rpc.common.loadblanace.impl.RandomLoadBalancer;
 import com.github.rpc.common.spi.SpiLoader;
+import io.grpc.LoadBalancer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.zookeeper.common.StringUtils;
 
@@ -11,13 +12,13 @@ import java.util.Objects;
 public class LoadBalancerFactory {
 
     static {
-        SpiLoader.load(LoadBalancer.class);
+        SpiLoader.load(LoadBalancerFactory.class);
     }
 
     /**
      * 默认负载均衡器
      */
-    private static final LoadBalancer DEFAULT_LOAD_BALANCER = new RandomLoadBalancer();
+    private static final LoadBalancerStrategy DEFAULT_LOAD_BALANCER = new RandomLoadBalancer();
 
     /**
      * 默认加载+动态选择
@@ -25,10 +26,10 @@ public class LoadBalancerFactory {
      * @param key
      * @return
      */
-    public static LoadBalancer getInstance(String key) {
+    public static LoadBalancerStrategy getInstance(String key) {
         // 1. 参数校验：使用 Objects 和 StringUtils
         if (Objects.nonNull(key) && !StringUtils.isBlank(key)) {
-            LoadBalancer loadBalancer = SpiLoader.getInstance(LoadBalancer.class, key);
+            LoadBalancerStrategy loadBalancer = SpiLoader.getInstance(LoadBalancer.class, key);
             if (loadBalancer != null) {
                 log.debug("使用 SPI 加载负载均衡器: key='{}', 实现类={}", key, loadBalancer.getClass().getSimpleName());
                 return loadBalancer;

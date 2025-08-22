@@ -1,6 +1,7 @@
-package com.github.rpc.common.registry;
+package com.github.rpc.common.registry.impl;
 
 import cn.hutool.core.collection.ConcurrentHashSet;
+import com.github.rpc.common.registry.Registry;
 import com.github.rpc.config.RegistryConfig;
 import com.github.rpc.exception.BizException;
 import com.github.rpc.model.RegistryServiceCache;

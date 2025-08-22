@@ -1,0 +1,2 @@
+json=com.github.rpc.common.serializer.JsonSerializer
+kryo=com.github.rpc.common.serializer.KryoSerializer

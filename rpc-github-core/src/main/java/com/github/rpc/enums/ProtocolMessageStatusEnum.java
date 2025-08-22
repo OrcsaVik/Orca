@@ -15,7 +15,7 @@ public enum ProtocolMessageStatusEnum {
 
     private final String text;
 
-    private final Integer value;
+    private final int value;
 
 
     /**
