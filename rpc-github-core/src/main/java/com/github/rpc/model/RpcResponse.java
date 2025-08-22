@@ -38,4 +38,5 @@ public class RpcResponse  implements Serializable {
         return RpcResponse.builder().message(message).build();
     }
 
+
 }

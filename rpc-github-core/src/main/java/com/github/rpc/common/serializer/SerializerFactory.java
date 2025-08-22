@@ -11,7 +11,7 @@ public class SerializerFactory {
     /**
      * 默认序列化器
      */
-    private static final Serializer DEFAULT_SERIALIZER = new JsonSerializer();
+    private static final Serializer DEFAULT_SERIALIZER = new KryoSerializer();
 
     /**
      * 获取实例

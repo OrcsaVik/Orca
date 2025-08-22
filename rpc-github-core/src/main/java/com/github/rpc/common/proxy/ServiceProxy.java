@@ -10,6 +10,7 @@ import com.github.rpc.common.registry.Registry;
 import com.github.rpc.common.registry.RegistryFactory;
 import com.github.rpc.common.retry.RetryStrategy;
 import com.github.rpc.common.retry.RetryStrategyFactory;
+import com.github.rpc.common.serializer.KryoSerializer;
 import com.github.rpc.common.serializer.Serializer;
 import com.github.rpc.common.serializer.SerializerFactory;
 import com.github.rpc.common.tolerant.TolerantStrategy;
@@ -90,18 +91,22 @@ public class ServiceProxy implements InvocationHandler {
         );
             } catch (Exception e) {
                 return tolerantStrategy.doTolerant(null, e);
+            }finally {
+                //清理ThreadLocal
+                KryoSerializer.resetKryo();
             }
         });
 
         try {
              rpcResponse = future.get(1, TimeUnit.SECONDS);
         } catch (Exception e){
-            log.warn("子线程执行结果错误 开启熔断");
-            return rpcResponse;
+            log.warn("服务调用存在错误");
+            return RpcResponse.fail("服务发生错误");
 
         }
 
-        return rpcResponse;
+        //返回调用结果
+        return rpcResponse.getData();
 
 
     }
@@ -111,7 +116,6 @@ public class ServiceProxy implements InvocationHandler {
     private static RpcResponse doHttpRequest(ServiceMetaInfoDTO selectedServiceMetaInfo, byte[] bodyBytes,Serializer serializer) throws IOException {
 
         //序列化处理 加载 默认Json
-//        final Serializer serializer = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerializer());
         // 发送 HTTP 请求 POST 自动关闭资源
         try (HttpResponse httpResponse = HttpRequest.post(selectedServiceMetaInfo.getServiceAddress())
                 .body(bodyBytes)

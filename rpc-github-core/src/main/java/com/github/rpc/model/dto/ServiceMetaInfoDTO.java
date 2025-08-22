@@ -45,7 +45,7 @@ public class ServiceMetaInfoDTO {
 
     /**
      * 获取服务注册节点键名
-     *
+     * 服务名/主机IP：端口
      * @return
      */
     public String getServiceNodeKey() {
@@ -63,4 +63,7 @@ public class ServiceMetaInfoDTO {
         }
         return String.format("%s:%s", serviceHost, servicePort);
     }
+
+
+
 }

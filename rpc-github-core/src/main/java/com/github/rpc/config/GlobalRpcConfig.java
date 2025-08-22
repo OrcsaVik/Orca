@@ -32,7 +32,7 @@ public class GlobalRpcConfig {
     /**
      * 序列化器
      */
-    private String serializer = SerializerStrategyConstant.JSON;
+    private String serializer = SerializerStrategyConstant.KRYO;
 
     /**
      * 负载均衡器
