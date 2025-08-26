@@ -4,8 +4,8 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import com.github.rpc.RpcApplication;
-import com.github.rpc.common.loadblanace.LoadBalancer;
 import com.github.rpc.common.loadblanace.LoadBalancerFactory;
+import com.github.rpc.common.loadblanace.LoadBalancerStrategy;
 import com.github.rpc.common.registry.Registry;
 import com.github.rpc.common.registry.RegistryFactory;
 import com.github.rpc.common.retry.RetryStrategy;
@@ -79,7 +79,7 @@ public class ServiceProxy implements InvocationHandler {
         }
 
         // 负载均衡
-        LoadBalancer loadBalancer = LoadBalancerFactory.getInstance(thisConfig.getLoadBalancer());
+        LoadBalancerStrategy loadBalancer = LoadBalancerFactory.getInstance(thisConfig.getLoadBalancer());
         // 将调用方法名（请求路径）作为负载均衡参数
         Map<String, Object> requestParams = new HashMap<>();
         //调用方法

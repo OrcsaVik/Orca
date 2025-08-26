@@ -1,13 +1,16 @@
 package com.github.rpc.common.spi;
 
 import cn.hutool.core.io.resource.ResourceUtil;
+import com.github.rpc.common.loadblanace.LoadBalancerStrategy;
 import com.github.rpc.common.serializer.Serializer;
+import com.github.rpc.config.center.ConfigCenter;
 import com.github.rpc.enums.ResponseCodeEnum;
 import com.github.rpc.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -48,8 +51,11 @@ public class SpiLoader {
 
     /**
      * 动态加载的类列表
+     *
+     * com.github.rpc.config.center.ConfigCenter
      */
-    private static final List<Class<?>> LOAD_CLASS_LIST = Arrays.asList(Serializer.class);
+    private static final List<Class<?>> LOAD_CLASS_LIST = Arrays.asList(Serializer.class,
+            ConfigCenter.class, LoadBalancerStrategy.class);
 
 
 
@@ -124,6 +130,35 @@ public class SpiLoader {
         }
         //如果为注册中心 此时返回key对应的注册实现类
         return (T) instanceCache.get(implClassName);
+    }
+
+//    public static void main(String[] args) {
+//        SpiLoader.loadAll();
+//        loaderMap.forEach((s, classMap) -> {
+//            System.out.println(s);
+//            System.out.println(classMap);
+//            classMap.forEach((key, value) -> {
+//                value.
+//            });
+//        });
+//
+//
+//    }
+
+    public static void main(String[] args) {
+        SpiLoader.loadAll();
+        loaderMap.forEach((interfaceName, classMap) -> {
+            System.out.println("=== " + interfaceName + " 的实现类 ===");
+            classMap.forEach((key, clazz) -> {
+                System.out.println("Key: " + key + " -> Class: " + clazz.getName());
+                // 获取并打印该类的所有公共方法
+                Method[] methods = clazz.getMethods();
+                System.out.println("  方法列表:");
+                for (Method method : methods) {
+                    System.out.println("    " + method.toString());
+                }
+            });
+        });
     }
 
 

@@ -31,14 +31,18 @@
 
         <!-- 依赖包 版本 -->
         <vertx.version>4.5.1</vertx.version>
+        <logback.version>1.2.11</logback.version>
+        <!-- 确保 Lombok 版本兼容 -->
         <lombok.version>1.18.30</lombok.version>
         <hutool.version>5.8.16</hutool.version>
-        <logback.version>1.3.12</logback.version>
         <hessian.version>4.0.66</hessian.version>
         <kryo.version>5.6.0</kryo.version>
         <jetcd.version>0.7.7</jetcd.version>
         <curator.version>5.6.0</curator.version>
         <guava-retrying.version>2.0.0</guava-retrying.version>
+        <nacos.version>2.2.3</nacos.version>
+        <jackson.version>2.15.2</jackson.version>
+        <snakeyaml.version>2.0</snakeyaml.version>
         <junit.version>4.13.2</junit.version>
     </properties>
 
@@ -66,11 +70,7 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>${logback.version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>com.github.rpc</groupId>
                 <artifactId>rpc-github-core</artifactId>
@@ -82,13 +82,6 @@
                 <version>${hessian.version}</version>
             </dependency>
 
-            <!-- https://projectlombok.org/ -->
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-                <scope>provided</scope>
-            </dependency>
 
 
             <dependency>
@@ -111,17 +104,83 @@
                 <artifactId>guava-retrying</artifactId>
                 <version>${guava-retrying.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
                 <scope>provided</scope>
             </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <!-- Nacos配置中心 -->
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-client</artifactId>
+                <version>${nacos.version}</version>
+            </dependency>
+
+
+            <!-- JSON处理 -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--                <artifactId>jackson-core</artifactId>-->
+<!--                <version>${jackson.version}</version>-->
+<!--            </dependency>-->
+
+<!--            &lt;!&ndash; Jackson Annotations &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--                <artifactId>jackson-annotations</artifactId>-->
+<!--                <version>${jackson.version}</version>-->
+<!--            </dependency>-->
+
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-yaml</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+
+            <!-- YAML处理 -->
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>5.3.22</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>5.3.22</version>
             </dependency>
         </dependencies>
 

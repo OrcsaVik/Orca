@@ -1,0 +1,2 @@
+local=com.github.rpc.config.center.impl.LocalFileConfigCenter
+nacos=com.github.rpc.config.center.impl.NacosConfigCenter

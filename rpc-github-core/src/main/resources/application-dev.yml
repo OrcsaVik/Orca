@@ -1,0 +1,31 @@
+rpc:
+  name: rpc-github-lhx
+  version: 1.0-SNAPSHOT
+  serverHost: localhost
+  serverPort: 8080
+  serializer: kryo
+  loadBalancer: random
+  retryStrategy: guava
+  tolerantStrategy: failFast
+  mock: false
+  maxRetryAttempts: 3
+  retryInterval: 200
+
+  registryConfig:
+    registry: zookeeper
+    address: localhost:2181
+    username:
+    password:
+    timeout: 10000
+    group: rpc
+
+  configCenterConfig:
+    enabled: true
+    type: nacos
+    address: localhost:8848
+    namespace: public
+    group: DEFAULT_GROUP
+    dataId: rpc-config
+    username: nacos
+    password: nacos
+    timeout: 3000

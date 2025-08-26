@@ -15,7 +15,7 @@ public class RpcInitBootstrap implements ImportBeanDefinitionRegistrar {
 
     /**
      * Spring 初始化时执行，初始化 RPC 框架
-     *
+     * 主要加载逻辑
      * @param importingClassMetadata
      * @param registry
      */

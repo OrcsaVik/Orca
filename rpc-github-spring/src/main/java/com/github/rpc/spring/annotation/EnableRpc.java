@@ -10,9 +10,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-@Import({RpcInitBootstrap.class, RpcProviderBootstrap.class, RpcConsumerBootstrap.class})
+@Import({ RpcInitBootstrap.class, RpcProviderBootstrap.class, RpcConsumerBootstrap.class })
 public @interface EnableRpc {
 
     /**
@@ -22,4 +22,3 @@ public @interface EnableRpc {
      */
     boolean needServer() default true;
 }
-

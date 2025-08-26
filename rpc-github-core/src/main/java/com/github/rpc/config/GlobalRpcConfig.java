@@ -3,10 +3,10 @@ package com.github.rpc.config;
 import com.github.rpc.constants.LoadBalancerConstant;
 import com.github.rpc.constants.RetryStrategyConstant;
 import com.github.rpc.constants.SerializerStrategyConstant;
+import com.github.rpc.constants.TolerantStrategyConstant;
+
 import lombok.Builder;
 import lombok.Data;
-
-//TODO
 
 @Data
 @Builder
@@ -48,7 +48,7 @@ public class GlobalRpcConfig {
     /**
      * 容错策略
      */
-    private String tolerantStrategy = TolerantStrategyKeys.FAIL_FAST;
+    private String tolerantStrategy = TolerantStrategyConstant.FAIL_FAST;
 
     /**
      * 模拟调用
@@ -59,6 +59,11 @@ public class GlobalRpcConfig {
      * 注册中心配置
      */
     private RegistryConfig registryConfig = new RegistryConfig();
+    
+    /**
+     * 配置中心配置
+     */
+    private ConfigCenterConfig configCenterConfig = new ConfigCenterConfig();
 
 
     /**
