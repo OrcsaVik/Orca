@@ -4,6 +4,8 @@
 
 ### rpc-github-core/ 核心模块包结构
 
+
+'''
 rpc-github-core/
 ├── src/main/java/com/github/rpc/
 │ ├── RpcApplication.java # 框架初始化入口类
@@ -37,7 +39,7 @@ rpc-github-core/
 │ └── service/ # 服务相关
 │ └── web/ # Web服务
 │ └── VertxHttpServer.java # Vert.x HTTP服务器
-
+'''
 
 ### Spring集成包作用分析
 
